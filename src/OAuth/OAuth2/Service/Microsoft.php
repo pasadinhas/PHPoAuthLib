@@ -80,27 +80,7 @@ class Microsoft extends AbstractService
     {
         $data = json_decode($responseBody, true);
 
-        if (null === $data || !is_array($data)) {
-            throw new TokenResponseException('Unable to parse response.');
-        } elseif (isset($data['error'])) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
-        }
-
-        $token = new StdOAuth2Token();
-        $token->setAccessToken($data['access_token']);
-        $token->setLifetime($data['expires_in']);
-
-        if (isset($data['refresh_token'])) {
-            $token->setRefreshToken($data['refresh_token']);
-            unset($data['refresh_token']);
-        }
-
-        unset($data['access_token']);
-        unset($data['expires_in']);
-
-        $token->setExtraParams($data);
-
-        return $token;
+        return $this->parseAccessToken($data);
     }
 
     /**

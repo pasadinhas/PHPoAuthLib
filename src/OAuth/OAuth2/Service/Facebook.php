@@ -140,30 +140,7 @@ class Facebook extends AbstractService
         // Facebook gives us a query string ... Oh wait. JSON is too simple, understand ?
         parse_str($responseBody, $data);
 
-        if (null === $data || !is_array($data)) {
-            throw new TokenResponseException('Unable to parse response.');
-        } elseif (isset($data['error'])) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
-        }
-
-        $token = new StdOAuth2Token();
-        $token->setAccessToken($data['access_token']);
-        
-        if (isset($data['expires'])) {
-            $token->setLifeTime($data['expires']);
-        }
-
-        if (isset($data['refresh_token'])) {
-            $token->setRefreshToken($data['refresh_token']);
-            unset($data['refresh_token']);
-        }
-
-        unset($data['access_token']);
-        unset($data['expires']);
-
-        $token->setExtraParams($data);
-
-        return $token;
+        return $this->parseAccessToken($data, true, ['expires' => 'expires']);
     }
 
     public function getDialogUri($dialogPath, array $parameters)

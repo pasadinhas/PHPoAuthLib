@@ -14,9 +14,13 @@ use OAuth\OAuth2\Service\Exception\InvalidScopeException;
 use OAuth\OAuth2\Service\Exception\MissingRefreshTokenException;
 use OAuth\Common\Token\TokenInterface;
 use OAuth\Common\Token\Exception\ExpiredTokenException;
+use OAuth\OAuth2\Traits\TokenParserTrait;
 
 abstract class AbstractService extends BaseAbstractService implements ServiceInterface
 {
+
+    use TokenParserTrait;
+
     /** @const OAUTH_VERSION */
     const OAUTH_VERSION = 2;
 

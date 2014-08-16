@@ -94,21 +94,8 @@ class Pocket extends AbstractService
     protected function parseAccessTokenResponse($responseBody)
     {
         parse_str($responseBody, $data);
-        
-        if ($data === null || !is_array($data)) {
-            throw new TokenResponseException('Unable to parse response.');
-        } elseif (isset($data['error'])) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
-        }
-        
-        $token = new StdOAuth2Token();
-        #$token->setRequestToken($data['access_token']);
-        $token->setAccessToken($data['access_token']);
-        $token->setEndOfLife(StdOAuth2Token::EOL_NEVER_EXPIRES);
-        unset($data['access_token']);
-        $token->setExtraParams($data);
-        
-        return $token;
+
+        return $this->parseAccessToken($data, false);
     }
 
     /**

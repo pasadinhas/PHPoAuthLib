@@ -60,32 +60,7 @@ class Heroku extends AbstractService
     {
         $data = json_decode($responseBody, true);
 
-        if (null === $data || !is_array($data)) {
-            throw new TokenResponseException('Unable to parse response.');
-        } elseif (isset($data['error_description']) || isset($data['error'])) {
-            throw new TokenResponseException(
-                sprintf(
-                    'Error in retrieving token: "%s"',
-                    isset($data['error_description']) ? $data['error_description'] : $data['error']
-                )
-            );
-        }
-
-        $token = new StdOAuth2Token();
-        $token->setAccessToken($data['access_token']);
-        $token->setLifeTime($data['expires_in']);
-
-        if (isset($data['refresh_token'])) {
-            $token->setRefreshToken($data['refresh_token']);
-            unset($data['refresh_token']);
-        }
-
-        unset($data['access_token']);
-        unset($data['expires_in']);
-
-        $token->setExtraParams($data);
-
-        return $token;
+        return $this->parseAccessToken($data);
     }
 
     /**

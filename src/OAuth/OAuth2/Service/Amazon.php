@@ -13,8 +13,7 @@ use OAuth\Common\Http\Uri\UriInterface;
 /**
  * Amazon service.
  *
- * @author Flávio Heleno <flaviohbatista@gmail.com>
- * @link https://images-na.ssl-images-amazon.com/images/G/01/lwa/dev/docs/website-developer-guide._TTH_.pdf
+ * @author Miguel Pasadinhas <miguel.pasadinhas@tecnico.ulisboa.pt>
  */
 class Amazon extends AbstractService
 {
@@ -56,29 +55,7 @@ class Amazon extends AbstractService
     {
         $data = json_decode($responseBody, true);
 
-        if (null === $data || !is_array($data)) {
-            throw new TokenResponseException('Unable to parse response.');
-        } elseif (isset($data['error_description'])) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data['error_description'] . '"');
-        } elseif (isset($data['error'])) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
-        }
-
-        $token = new StdOAuth2Token();
-        $token->setAccessToken($data['access_token']);
-        $token->setLifeTime($data['expires_in']);
-
-        if (isset($data['refresh_token'])) {
-            $token->setRefreshToken($data['refresh_token']);
-            unset($data['refresh_token']);
-        }
-
-        unset($data['access_token']);
-        unset($data['expires_in']);
-
-        $token->setExtraParams($data);
-
-        return $token;
+        return $this->parseAccessToken($data);
     }
 
     protected function getDefaultBaseApiUrl()
