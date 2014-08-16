@@ -13,20 +13,6 @@ use OAuth\Common\Http\Uri\UriInterface;
 class Harvest extends AbstractService
 {
 
-    public function __construct(
-        CredentialsInterface $credentials,
-        ClientInterface $httpClient,
-        TokenStorageInterface $storage,
-        $scopes = array(),
-        UriInterface $baseApiUri = null
-    ) {
-        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
-
-        if (null === $baseApiUri) {
-            $this->baseApiUri = new Uri('https://api.github.com/');
-        }
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -81,5 +67,16 @@ class Harvest extends AbstractService
     protected function getExtraOAuthHeaders()
     {
         return array('Accept' => 'application/json');
+    }
+
+    /**
+     * Returns a UriInterface to be used as base api url if none is provided
+     *
+     * @return null|UriInterface
+     */
+    protected function getDefaultBaseApiUrl()
+    {
+        // Is this correct?
+        return new Uri('https://api.github.com/');
     }
 }

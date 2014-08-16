@@ -14,20 +14,6 @@ class Foursquare extends AbstractService
 {
     private $apiVersionDate = '20130829';
 
-    public function __construct(
-        CredentialsInterface $credentials,
-        ClientInterface $httpClient,
-        TokenStorageInterface $storage,
-        $scopes = array(),
-        UriInterface $baseApiUri = null
-    ) {
-        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
-
-        if (null === $baseApiUri) {
-            $this->baseApiUri = new Uri('https://api.foursquare.com/v2/');
-        }
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -77,5 +63,15 @@ class Foursquare extends AbstractService
         $uri->addToQuery('v', $this->apiVersionDate);
 
         return parent::request($uri, $method, $body, $extraHeaders);
+    }
+
+    /**
+     * Returns a UriInterface to be used as base api url if none is provided
+     *
+     * @return null|UriInterface
+     */
+    protected function getDefaultBaseApiUrl()
+    {
+        return new Uri('https://api.foursquare.com/v2/');
     }
 }

@@ -18,19 +18,6 @@ use OAuth\Common\Http\Uri\UriInterface;
  */
 class Box extends AbstractService
 {
-    public function __construct(
-        CredentialsInterface $credentials,
-        ClientInterface $httpClient,
-        TokenStorageInterface $storage,
-        $scopes = array(),
-        UriInterface $baseApiUri = null
-    ) {
-        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri, true);
-
-        if (null === $baseApiUri) {
-            $this->baseApiUri = new Uri('https://api.box.com/2.0/');
-        }
-    }
 
     /**
      * {@inheritdoc}
@@ -84,5 +71,15 @@ class Box extends AbstractService
         $token->setExtraParams($data);
 
         return $token;
+    }
+
+    /**
+     * Returns a UriInterface to be used as base api url if none is provided
+     *
+     * @return null|UriInterface
+     */
+    protected function getDefaultBaseApiUrl()
+    {
+        return new Uri('https://api.box.com/2.0/');
     }
 }

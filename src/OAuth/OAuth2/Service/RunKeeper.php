@@ -17,19 +17,6 @@ use OAuth\Common\Http\Uri\UriInterface;
  */
 class RunKeeper extends AbstractService
 {
-    public function __construct(
-        CredentialsInterface $credentials,
-        ClientInterface $httpClient,
-        TokenStorageInterface $storage,
-        $scopes = array(),
-        UriInterface $baseApiUri = null
-    ) {
-        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
-
-        if (null === $baseApiUri) {
-            $this->baseApiUri = new Uri('https://api.runkeeper.com/');
-        }
-    }
 
     /**
      * {@inheritdoc}
@@ -101,5 +88,15 @@ class RunKeeper extends AbstractService
         $token->setExtraParams($data);
 
         return $token;
+    }
+
+    /**
+     * Returns a UriInterface to be used as base api url if none is provided
+     *
+     * @return null|UriInterface
+     */
+    protected function getDefaultBaseApiUrl()
+    {
+        return new Uri('https://api.runkeeper.com/');
     }
 }

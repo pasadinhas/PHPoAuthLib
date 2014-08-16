@@ -116,20 +116,6 @@ class Facebook extends AbstractService
     //Page Permissions
     const SCOPE_PAGES                         = 'manage_pages';
 
-    public function __construct(
-        CredentialsInterface $credentials,
-        ClientInterface $httpClient,
-        TokenStorageInterface $storage,
-        $scopes = array(),
-        UriInterface $baseApiUri = null
-    ) {
-        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
-
-        if (null === $baseApiUri) {
-            $this->baseApiUri = new Uri('https://graph.facebook.com/');
-        }
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -189,5 +175,15 @@ class Facebook extends AbstractService
         $baseUrl = self::WWW_URL . 'dialog/' . $dialogPath;
         $query = http_build_query($parameters);
         return new Uri($baseUrl . '?' . $query);
+    }
+
+    /**
+     * Returns a UriInterface to be used as base api url if none is provided
+     *
+     * @return null|UriInterface
+     */
+    protected function getDefaultBaseApiUrl()
+    {
+        return new Uri('https://graph.facebook.com/');
     }
 }

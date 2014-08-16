@@ -30,23 +30,6 @@ class Heroku extends AbstractService
     const SCOPE_WRITE_PROTECTED = 'write-protected';
 
     /**
-    * {@inheritdoc}
-    */
-    public function __construct(
-        CredentialsInterface $credentials,
-        ClientInterface $httpClient,
-        TokenStorageInterface $storage,
-        $scopes = array(),
-        UriInterface $baseApiUri = null
-    ) {
-        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
-
-        if (null === $baseApiUri) {
-            $this->baseApiUri = new Uri('https://api.heroku.com/');
-        }
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function getAuthorizationEndpoint()
@@ -119,5 +102,15 @@ class Heroku extends AbstractService
     protected function getExtraApiHeaders()
     {
         return array('Accept' => 'application/vnd.heroku+json; version=3', 'Content-Type' => 'application/json');
+    }
+
+    /**
+     * Returns a UriInterface to be used as base api url if none is provided
+     *
+     * @return null|UriInterface
+     */
+    protected function getDefaultBaseApiUrl()
+    {
+        return new Uri('https://api.heroku.com/');
     }
 }

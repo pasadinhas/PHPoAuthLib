@@ -44,23 +44,6 @@ class Dailymotion extends AbstractService
           DISPLAY_MOBILE = 'mobile';
 
     /**
-    * {@inheritdoc}
-    */
-    public function __construct(
-        CredentialsInterface $credentials,
-        ClientInterface $httpClient,
-        TokenStorageInterface $storage,
-        $scopes = array(),
-        UriInterface $baseApiUri = null
-    ) {
-        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
-
-        if (null === $baseApiUri) {
-            $this->baseApiUri = new Uri('https://api.dailymotion.com/');
-        }
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function getAuthorizationEndpoint()
@@ -125,5 +108,15 @@ class Dailymotion extends AbstractService
     protected function getExtraOAuthHeaders()
     {
         return array('Accept' => 'application/json');
+    }
+
+    /**
+     * Returns a UriInterface to be used as base api url if none is provided
+     *
+     * @return null|UriInterface
+     */
+    protected function getDefaultBaseApiUrl()
+    {
+        return new Uri('https://api.box.com/2.0/');
     }
 }

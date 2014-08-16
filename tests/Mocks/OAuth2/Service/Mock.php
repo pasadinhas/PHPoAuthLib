@@ -2,6 +2,7 @@
 
 namespace OAuthTest\Mocks\OAuth2\Service;
 
+use OAuth\Common\Http\Uri\UriInterface;
 use OAuth\OAuth2\Service\AbstractService;
 use OAuth\Common\Http\Uri\Uri;
 use OAuth\OAuth2\Token\StdOAuth2Token;
@@ -54,5 +55,15 @@ class Mock extends AbstractService
         }
 
         return parent::getAuthorizationMethod();
+    }
+
+    /**
+     * Returns a UriInterface to be used as base api url if none is provided
+     *
+     * @return null|UriInterface
+     */
+    protected function getDefaultBaseApiUrl()
+    {
+        return null;
     }
 }

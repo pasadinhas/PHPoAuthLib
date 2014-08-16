@@ -2,6 +2,7 @@
 
 namespace OAuth\OAuth2\Service;
 
+use OAuth\Common\Http\Uri\UriInterface;
 use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\OAuth2\Service\Exception\InvalidAccessTypeException;
@@ -148,5 +149,15 @@ class Google extends AbstractService
         $token->setExtraParams($data);
 
         return $token;
+    }
+
+    /**
+     * Returns a UriInterface to be used as base api url if none is provided
+     *
+     * @return null|UriInterface
+     */
+    protected function getDefaultBaseApiUrl()
+    {
+        return new Uri('https://www.googleapis.com/oauth2/v1/');
     }
 }

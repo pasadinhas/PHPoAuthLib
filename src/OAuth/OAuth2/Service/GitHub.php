@@ -87,20 +87,6 @@ class GitHub extends AbstractService
      */
     const SCOPE_HOOKS_ADMIN = 'admin:repo_hook';
 
-    public function __construct(
-        CredentialsInterface $credentials,
-        ClientInterface $httpClient,
-        TokenStorageInterface $storage,
-        $scopes = array(),
-        UriInterface $baseApiUri = null
-    ) {
-        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
-
-        if (null === $baseApiUri) {
-            $this->baseApiUri = new Uri('https://api.github.com/');
-        }
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -167,5 +153,15 @@ class GitHub extends AbstractService
     protected function getExtraApiHeaders()
     {
         return array('Accept' => 'application/vnd.github.beta+json');
+    }
+
+    /**
+     * Returns a UriInterface to be used as base api url if none is provided
+     *
+     * @return null|UriInterface
+     */
+    protected function getDefaultBaseApiUrl()
+    {
+        return new Uri('https://api.github.com/');
     }
 }

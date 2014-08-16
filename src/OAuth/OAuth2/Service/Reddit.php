@@ -34,20 +34,6 @@ class Reddit extends AbstractService
     const SCOPE_MODLOG                       = 'modlog';
     const SCOPE_MODPOST                      = 'modpost';
 
-    public function __construct(
-        CredentialsInterface $credentials,
-        ClientInterface $httpClient,
-        TokenStorageInterface $storage,
-        $scopes = array(),
-        UriInterface $baseApiUri = null
-    ) {
-        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri, true);
-
-        if (null === $baseApiUri) {
-            $this->baseApiUri = new Uri('https://oauth.reddit.com');
-        }
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -110,5 +96,15 @@ class Reddit extends AbstractService
         // Reddit uses a Basic OAuth header
         return array('Authorization' => 'Basic ' .
             base64_encode($this->credentials->getConsumerId() . ':' . $this->credentials->getConsumerSecret()));
+    }
+
+    /**
+     * Returns a UriInterface to be used as base api url if none is provided
+     *
+     * @return null|UriInterface
+     */
+    protected function getDefaultBaseApiUrl()
+    {
+        return new Uri('https://oauth.reddit.com');
     }
 }

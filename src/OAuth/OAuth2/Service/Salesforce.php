@@ -89,4 +89,14 @@ class SalesforceService extends AbstractService
     {
         return array('Accept' => 'application/json');
     }
+
+    /**
+     * Returns a UriInterface to be used as base api url if none is provided
+     *
+     * @return null|UriInterface
+     */
+    protected function getDefaultBaseApiUrl()
+    {
+        return null;
+    }
 }

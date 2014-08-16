@@ -12,20 +12,6 @@ use OAuth\Common\Http\Uri\UriInterface;
 
 class Bitly extends AbstractService
 {
-    public function __construct(
-        CredentialsInterface $credentials,
-        ClientInterface $httpClient,
-        TokenStorageInterface $storage,
-        $scopes = array(),
-        UriInterface $baseApiUri = null
-    ) {
-        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
-
-        if (null === $baseApiUri) {
-            $this->baseApiUri = new Uri('https://api-ssl.bitly.com/v3/');
-        }
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -107,5 +93,15 @@ class Bitly extends AbstractService
         $this->storage->storeAccessToken($this->service(), $token);
 
         return $token;
+    }
+
+    /**
+     * Returns a UriInterface to be used as base api url if none is provided
+     *
+     * @return null|UriInterface
+     */
+    protected function getDefaultBaseApiUrl()
+    {
+        return new Uri('https://api-ssl.bitly.com/v3/');
     }
 }

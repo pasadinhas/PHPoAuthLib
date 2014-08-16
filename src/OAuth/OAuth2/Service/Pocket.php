@@ -12,19 +12,7 @@ use OAuth\Common\Http\Client\ClientInterface;
 
 class Pocket extends AbstractService
 {
-    public function __construct(
-        CredentialsInterface $credentials,
-        ClientInterface $httpClient,
-        TokenStorageInterface $storage,
-        $scopes = array(),
-        UriInterface $baseApiUri = null
-    ) {
-        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
-        if ($baseApiUri === null) {
-            $this->baseApiUri = new Uri('https://getpocket.com/v3/');
-        }
-    }
-    
+
     public function getRequestTokenEndpoint()
     {
         return new Uri('https://getpocket.com/v3/oauth/request');
@@ -121,5 +109,15 @@ class Pocket extends AbstractService
         $token->setExtraParams($data);
         
         return $token;
+    }
+
+    /**
+     * Returns a UriInterface to be used as base api url if none is provided
+     *
+     * @return null|UriInterface
+     */
+    protected function getDefaultBaseApiUrl()
+    {
+        return new Uri('https://getpocket.com/v3/');
     }
 }

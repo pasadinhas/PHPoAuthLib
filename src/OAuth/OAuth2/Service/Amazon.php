@@ -25,20 +25,6 @@ class Amazon extends AbstractService
     const SCOPE_PROFILE     = 'profile';
     const SCOPE_POSTAL_CODE = 'postal_code';
 
-    public function __construct(
-        CredentialsInterface $credentials,
-        ClientInterface $httpClient,
-        TokenStorageInterface $storage,
-        $scopes = array(),
-        UriInterface $baseApiUri = null
-    ) {
-        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
-
-        if (null === $baseApiUri) {
-            $this->baseApiUri = new Uri('https://api.amazon.com/');
-        }
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -93,5 +79,10 @@ class Amazon extends AbstractService
         $token->setExtraParams($data);
 
         return $token;
+    }
+
+    protected function getDefaultBaseApiUrl()
+    {
+        return new Uri('https://api.amazon.com/');
     }
 }
