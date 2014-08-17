@@ -57,4 +57,14 @@ class Mock extends AbstractService
     {
         return $this->determineRequestUriFromPath($path, $baseApiUri);
     }
+
+    /**
+     * Returns the OAuth API version of the Service. (1 or 2)
+     *
+     * @return integer
+     */
+    public function getOAuthVersion()
+    {
+        return 2;
+    }
 }

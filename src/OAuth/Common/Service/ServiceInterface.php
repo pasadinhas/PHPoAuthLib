@@ -46,4 +46,11 @@ interface ServiceInterface
      * @return UriInterface
      */
     public function getAccessTokenEndpoint();
+
+    /**
+     * Returns the OAuth API version of the Service. (1 or 2)
+     *
+     * @return integer
+     */
+    public function getOAuthVersion();
 }

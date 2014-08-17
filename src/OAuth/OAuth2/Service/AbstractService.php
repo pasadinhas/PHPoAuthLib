@@ -62,6 +62,16 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
     }
 
     /**
+     * Returns the OAuth API version of the Service. (1 or 2)
+     *
+     * @return integer
+     */
+    public function getOAuthVersion()
+    {
+        return self::OAUTH_VERSION;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getAuthorizationUri(array $additionalParameters = array())
