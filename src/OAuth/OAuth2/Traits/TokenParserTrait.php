@@ -44,9 +44,11 @@ trait TokenParserTrait {
         if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
         } elseif (isset($data[$this->accessTokenKeys['error_desc']])) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data[$this->accessTokenKeys['error_desc']] . '"');
+            $message = 'Error in retrieving token: "' . $data[$this->accessTokenKeys['error_desc']] . '"';
+            throw new TokenResponseException($message);
         } elseif (isset($data[$this->accessTokenKeys['error']])) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data[$this->accessTokenKeys['error']] . '"');
+            $message = 'Error in retrieving token: "' . $data[$this->accessTokenKeys['error']] . '"';
+            throw new TokenResponseException($message);
         }
         return $data;
     }
