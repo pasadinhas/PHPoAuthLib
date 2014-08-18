@@ -1,6 +1,6 @@
-PHPoAuthLib
-===========
-PHPoAuthLib provides oAuth support in PHP 5.3+ and is very easy to integrate with any project which requires an oAuth client.
+php-oauth-lib
+=============
+php-oauth-lib provides OAuth support in PHP 5.4+ and is very easy to integrate with any project which requires an OAuth client.
 
 [![Build Status](https://travis-ci.org/Lusitanian/PHPoAuthLib.png?branch=master)](https://travis-ci.org/Lusitanian/PHPoAuthLib)
 [![Code Coverage](https://scrutinizer-ci.com/g/Lusitanian/PHPoAuthLib/badges/coverage.png?s=a0a15bebfda49e79f9ce289b00c6dfebd18fc98e)](https://scrutinizer-ci.com/g/Lusitanian/PHPoAuthLib/)
@@ -10,7 +10,7 @@ PHPoAuthLib provides oAuth support in PHP 5.3+ and is very easy to integrate wit
 
 Installation
 ------------
-This library can be found on [Packagist](https://packagist.org/packages/lusitanian/oauth).
+This library can be found on [Packagist](https://packagist.org/packages/pasadinhas/oauth).
 The recommended way to install this is through [composer](http://getcomposer.org).
 
 Edit your `composer.json` and add:
@@ -23,11 +23,10 @@ Edit your `composer.json` and add:
 }
 ```
 
-And install dependencies:
+And then update your dependencies with:
 
 ```bash
-$ curl -sS https://getcomposer.org/installer | php
-$ php composer.phar install
+$ composer update
 ```
 
 Features
@@ -38,9 +37,20 @@ Features
     - You can use any HTTP client you desire, just create a class utilizing it which implements `OAuth\Common\Http\ClientInterface` (two implementations are included)
     - You can use any storage mechanism for tokens. By default, session, in-memory and Redis.io (requires PHPRedis) storage mechanisms are included. Implement additional mechanisms by implementing `OAuth\Common\Token\TokenStorageInterface`.
 
+Extend this package
+-------------------
+If you implement any new Service, HTTP Client or Storage, make a pull request so I can add it to this package. Don't forget to write some tests for it!
+
+### Services
+You can implement any service with custim requirements by extending and implementing the `AbstractService` class of the corresponding OAuth version. You will need to implement the abstract methods and should be ready to go! In order to parse the token response from OAuth2 it's recommended to use `TokenParserTrait` provided.
+### HTTP Clients
+You can implement any HTTP Client you desire. Just create a class that implements `OAuth\Common\Http\ClientInterface`. By default a `CurlClient` and a `StreamClient` are provided.
+### Storage
+The same for storage. Just implement the `OAuth\Common\Token\TokenStorageInterface` and use it in your app.
+
 Service support
 ---------------
-The library supports both oAuth 1.x and oAuth 2.0 compliant services. A list of currently implemented services can be found below. 
+The library supports both OAuth 1.x and OAuth 2.0 compliant services. A list of currently implemented services can be found below.
 
 Included service implementations
 --------------------------------
@@ -61,6 +71,7 @@ Included service implementations
     - Dailymotion
     - Dropbox
     - Facebook
+    - FenixEdu
     - Foursquare
     - GitHub
     - Google
@@ -77,24 +88,19 @@ Included service implementations
     - SoundCloud
     - Vkontakte
     - Yammer
-- more to come!
+- more to come! (Make pull requests if you have any!)
 
 Examples
 --------
-Examples of basic usage are located in the examples/ directory.
+Examples of basic usage are located in the [examples/](https://github.com/pasadinhas/oauth/master/tree/examples/) directory.
 
 Usage
 ------
-For usage with complete auth flow, please see the examples. More in-depth documentation will come with release 1.0.
+For usage with complete auth flow, please see the [examples](https://github.com/pasadinhas/oauth/master/tree/examples/).
 
 Framework Integration
 ---------------------
-* Lithium: Sébastien Charrier has written [an adapter](https://github.com/scharrier/li3_socialauth) for the library.
-* Laravel 4: Dariusz Prząda has written [a service provider](https://github.com/artdarek/oauth-4-laravel) for the library.
-
-Extensions
-----------
-* Extract normalized user data from OAuth Services with the library [PHPoAuthUserData](https://github.com/Oryzone/PHPoAuthUserData) by Luciano Mammino
+* Laravel 4: I have [package](https://github.com/artdarek/oauth-4-laravel) for the library. It has a Service Provider which makes using this package even easier!
 
 Tests
 ------
