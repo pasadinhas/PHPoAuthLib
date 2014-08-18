@@ -29,14 +29,6 @@ And then update your dependencies with:
 $ composer update
 ```
 
-Features
---------
-- PSR-0 compliant for easy interoperability
-- Fully extensible in every facet.
-    - You can implement any service with any custom requirements by extending the protocol version's `AbstractService` implementation.
-    - You can use any HTTP client you desire, just create a class utilizing it which implements `OAuth\Common\Http\ClientInterface` (two implementations are included)
-    - You can use any storage mechanism for tokens. By default, session, in-memory and Redis.io (requires PHPRedis) storage mechanisms are included. Implement additional mechanisms by implementing `OAuth\Common\Token\TokenStorageInterface`.
-
 Extend this package
 -------------------
 If you implement any new Service, HTTP Client or Storage, make a pull request so I can add it to this package. Don't forget to write some tests for it!
@@ -92,15 +84,15 @@ Included service implementations
 
 Examples
 --------
-Examples of basic usage are located in the [examples/](https://github.com/pasadinhas/oauth/master/tree/examples/) directory.
+Examples of basic usage are located in the [examples/](https://github.com/pasadinhas/oauth/tree/master/examples/) directory.
 
 Usage
 ------
-For usage with complete auth flow, please see the [examples](https://github.com/pasadinhas/oauth/master/tree/examples/).
+For usage with complete auth flow, please see the [examples](https://github.com/pasadinhas/oauth/tree/master/examples/).
 
 Framework Integration
 ---------------------
-* Laravel 4: I have [package](https://github.com/artdarek/oauth-4-laravel) for the library. It has a Service Provider which makes using this package even easier!
+* Laravel 4: I have a [package](https://github.com/pasadinhas/laravel-oauth) for the library. It has a Service Provider which makes using this package even easier!
 
 Tests
 ------
