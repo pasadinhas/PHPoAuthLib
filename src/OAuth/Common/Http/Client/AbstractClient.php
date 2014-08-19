@@ -27,7 +27,7 @@ abstract class AbstractClient implements ClientInterface
      *
      * @param string $userAgent The UA string the client will use
      */
-    public function __construct($userAgent = 'PHPoAuthLib')
+    public function __construct($userAgent = 'pasadinhas-php-oauth-lib')
     {
         $this->userAgent = $userAgent;
     }
